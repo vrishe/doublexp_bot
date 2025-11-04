@@ -1,0 +1,415 @@
+{
+  "Biomes": {
+    "Crystalline Caverns": [
+      {
+        "CodeName": "Bronze Avalanche",
+        "Complexity": "1",
+        "Length": "1",
+        "PrimaryObjective": "Mining Expedition",
+        "SecondaryObjective": "ApocaBlooms",
+        "Seed": 93861,
+        "id": 209294,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Sunken Unfortune",
+        "Complexity": "2",
+        "Length": "2",
+        "MissionMutator": "Double XP",
+        "MissionWarnings": [
+          "Shield Disruption"
+        ],
+        "PrimaryObjective": "Industrial Sabotage",
+        "SecondaryObjective": "Hollomite",
+        "Seed": 52608,
+        "id": 209295,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Shattered Trench",
+        "Complexity": "3",
+        "Length": "2",
+        "PrimaryObjective": "Escort Duty",
+        "SecondaryObjective": "Ebonuts",
+        "Seed": 1883,
+        "id": 209296,
+        "included_in": [
+          "s0"
+        ]
+      },
+      {
+        "CodeName": "Shattered Trench",
+        "Complexity": "3",
+        "Length": "2",
+        "MissionMutator": "Secret Secondary",
+        "PrimaryObjective": "Escort Duty",
+        "SecondaryObjective": "Ebonuts",
+        "Seed": 1883,
+        "id": 209297,
+        "included_in": [
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Final Hate",
+        "Complexity": "3",
+        "Length": "3",
+        "MissionWarnings": [
+          "Lithophage Outbreak"
+        ],
+        "PrimaryObjective": "Point Extraction",
+        "SecondaryObjective": "Gunk Seeds",
+        "Seed": 29971,
+        "id": 209298,
+        "included_in": [
+          "s3"
+        ]
+      }
+    ],
+    "Fungus Bogs": [
+      {
+        "CodeName": "Unrobed Nest",
+        "Complexity": "1",
+        "Length": "2",
+        "PrimaryObjective": "Mining Expedition",
+        "SecondaryObjective": "ApocaBlooms",
+        "Seed": 2672,
+        "id": 209310,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Wild Vault",
+        "Complexity": "2",
+        "Length": "2",
+        "PrimaryObjective": "Salvage Operation",
+        "SecondaryObjective": "Gunk Seeds",
+        "Seed": 69287,
+        "id": 209311,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Tainted Retreat",
+        "Complexity": "3",
+        "Length": "3",
+        "MissionMutator": "Double XP",
+        "MissionWarnings": [
+          "Exploder Infestation"
+        ],
+        "PrimaryObjective": "Elimination",
+        "SecondaryObjective": "Ebonuts",
+        "Seed": 94952,
+        "id": 209312,
+        "included_in": [
+          "s0"
+        ]
+      },
+      {
+        "CodeName": "Tainted Retreat",
+        "Complexity": "3",
+        "Length": "3",
+        "MissionWarnings": [
+          "Swarmageddon"
+        ],
+        "PrimaryObjective": "Elimination",
+        "SecondaryObjective": "Ebonuts",
+        "Seed": 94952,
+        "id": 209313,
+        "included_in": [
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Glowing Thickening",
+        "Complexity": "3",
+        "Length": "2",
+        "MissionMutator": "Gold Rush",
+        "MissionWarnings": [
+          "Parasites"
+        ],
+        "PrimaryObjective": "Point Extraction",
+        "SecondaryObjective": "Boolo Caps",
+        "Seed": 36619,
+        "id": 209314,
+        "included_in": [
+          "s0"
+        ]
+      },
+      {
+        "CodeName": "Glowing Thickening",
+        "Complexity": "3",
+        "Length": "2",
+        "MissionWarnings": [
+          "Elite Threat"
+        ],
+        "PrimaryObjective": "Point Extraction",
+        "SecondaryObjective": "Boolo Caps",
+        "Seed": 36619,
+        "id": 209315,
+        "included_in": [
+          "s1",
+          "s3"
+        ]
+      }
+    ],
+    "Glacial Strata": [
+      {
+        "CodeName": "Impure Betrayal",
+        "Complexity": "2",
+        "Length": "2",
+        "PrimaryObjective": "Egg Hunt",
+        "SecondaryObjective": "Glyphid Eggs",
+        "Seed": 52719,
+        "id": 209289,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Loaded Hollow",
+        "Complexity": "3",
+        "Length": "2",
+        "PrimaryObjective": "Point Extraction",
+        "SecondaryObjective": "ApocaBlooms",
+        "Seed": 97319,
+        "id": 209290,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Bright Rage",
+        "Complexity": "2",
+        "Length": "2",
+        "MissionMutator": "Critical Weakness",
+        "PrimaryObjective": "Elimination",
+        "SecondaryObjective": "Fester Fleas",
+        "Seed": 6582,
+        "id": 209291,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Rocky Sleep",
+        "Complexity": "1",
+        "Length": "2",
+        "MissionMutator": "Secret Secondary",
+        "PrimaryObjective": "Mining Expedition",
+        "SecondaryObjective": "ApocaBlooms",
+        "Seed": 91411,
+        "id": 209292,
+        "included_in": [
+          "s0"
+        ]
+      },
+      {
+        "CodeName": "Rocky Sleep",
+        "Complexity": "1",
+        "Length": "2",
+        "MissionWarnings": [
+          "Swarmageddon"
+        ],
+        "PrimaryObjective": "Mining Expedition",
+        "SecondaryObjective": "ApocaBlooms",
+        "Seed": 91411,
+        "id": 209293,
+        "included_in": [
+          "s1",
+          "s3"
+        ]
+      }
+    ],
+    "Magma Core": [
+      {
+        "CodeName": "Ruptured Echo",
+        "Complexity": "2",
+        "Length": "2",
+        "PrimaryObjective": "Elimination",
+        "SecondaryObjective": "Bha Barnacles",
+        "Seed": 82143,
+        "id": 209306,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Fast Blank",
+        "Complexity": "2",
+        "Length": "2",
+        "PrimaryObjective": "Escort Duty",
+        "SecondaryObjective": "Ebonuts",
+        "Seed": 44742,
+        "id": 209307,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Imperfect Wreck",
+        "Complexity": "2",
+        "Length": "1",
+        "PrimaryObjective": "Deep Scan",
+        "SecondaryObjective": "Boolo Caps",
+        "Seed": 55153,
+        "id": 209308,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Forgotten Wasteland",
+        "Complexity": "1",
+        "Length": "2",
+        "PrimaryObjective": "Industrial Sabotage",
+        "SecondaryObjective": "Boolo Caps",
+        "Seed": 89812,
+        "id": 209309,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      }
+    ],
+    "Salt Pits": [
+      {
+        "CodeName": "Big Catch",
+        "Complexity": "1",
+        "Length": "1",
+        "PrimaryObjective": "Egg Hunt",
+        "SecondaryObjective": "Fossils",
+        "Seed": 54456,
+        "id": 209299,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Karl's Nightfall",
+        "Complexity": "2",
+        "Length": "2",
+        "PrimaryObjective": "On-Site Refining",
+        "SecondaryObjective": "Fester Fleas",
+        "Seed": 61371,
+        "id": 209300,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Madmen's Wilderness",
+        "Complexity": "1",
+        "Length": "2",
+        "MissionWarnings": [
+          "Duck and Cover"
+        ],
+        "PrimaryObjective": "Mining Expedition",
+        "SecondaryObjective": "Ebonuts",
+        "Seed": 14878,
+        "id": 209301,
+        "included_in": [
+          "s0"
+        ]
+      },
+      {
+        "CodeName": "Madmen's Wilderness",
+        "Complexity": "1",
+        "Length": "2",
+        "MissionWarnings": [
+          "Rival Presence"
+        ],
+        "PrimaryObjective": "Mining Expedition",
+        "SecondaryObjective": "Ebonuts",
+        "Seed": 14878,
+        "id": 209302,
+        "included_in": [
+          "s1"
+        ]
+      },
+      {
+        "CodeName": "Madmen's Wilderness",
+        "Complexity": "1",
+        "Length": "2",
+        "MissionWarnings": [
+          "Lithophage Outbreak"
+        ],
+        "PrimaryObjective": "Mining Expedition",
+        "SecondaryObjective": "Ebonuts",
+        "Seed": 14878,
+        "id": 209303,
+        "included_in": [
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Natural Shock",
+        "Complexity": "2",
+        "Length": "2",
+        "MissionWarnings": [
+          "Parasites",
+          "Shield Disruption"
+        ],
+        "PrimaryObjective": "Salvage Operation",
+        "SecondaryObjective": "Glyphid Eggs",
+        "Seed": 87834,
+        "id": 209304,
+        "included_in": [
+          "s0",
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "CodeName": "Cruel Crater",
+        "Complexity": "3",
+        "Length": "2",
+        "MissionWarnings": [
+          "Lithophage Outbreak"
+        ],
+        "PrimaryObjective": "Deep Scan",
+        "SecondaryObjective": "ApocaBlooms",
+        "Seed": 51148,
+        "id": 209305,
+        "included_in": [
+          "s3"
+        ]
+      }
+    ]
+  },
+  "RandomSeed": 56000,
+  "timestamp": "2025-11-04T14:00:00Z"
+}
