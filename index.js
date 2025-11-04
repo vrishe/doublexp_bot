@@ -11,8 +11,8 @@ function get_minutes_offset(date0, date1)
   return (date1.getTime() - date0.getTime()) / 60000;
 }
 
-const double_exp_mutator = 'Double XP'
 const timeframe = 30; // minutes
+const double_exp_mutator = 'Double XP'
 const base_url = 'https://doublexp.net';
 const fetch_missions_async = promisify((when, callback) => {
   https.get(`${base_url}/json?data=${when}`, (res) => {
@@ -36,7 +36,6 @@ const fetch_missions_async = promisify((when, callback) => {
     callback(err);
   });
 });
-
 async function query_doublexp_async(when)
 {
     const data = await fetch_missions_async(when);
@@ -63,10 +62,6 @@ async function query_doublexp_async(when)
     };
 }
 
-// Создаём экземпляр бота
-const bot = new Telegraf(process.env.BOT_TOKEN);
-
-// Подключение к SQLite (файл db.sqlite3 создастся автоматически)
 const db = new sqlite3.Database(path.join(process.env.DATA_DIR ?? "./", 'db.sqlite3'), (err) => {
   if (err) {
     console.error('DB connection error:', err.message);
@@ -81,8 +76,6 @@ const db = new sqlite3.Database(path.join(process.env.DATA_DIR ?? "./", 'db.sqli
     `);
   }
 });
-
-// Функция для добавления чата в БД
 function registerChat(chatId) {
   return new Promise((resolve, reject) => {
     db.run(
@@ -98,8 +91,6 @@ function registerChat(chatId) {
     );
   });
 }
-
-// Функция для получения всех ID чатов
 function getAllChatIds() {
   return new Promise((resolve, reject) => {
     db.all('SELECT chat_id FROM chats', (err, rows) => {
@@ -113,11 +104,11 @@ function getAllChatIds() {
   });
 }
 
+const bot = new Telegraf(process.env.BOT_TOKEN);
 function add_signature(message)
 {
   return message + `\n\n${base_url}`;
 }
-
 function get_mission_formatted_tg(mission)
 {
   let desc = `*<${mission.Biome}> ${mission.CodeName}*\n` +
@@ -134,8 +125,19 @@ function get_mission_formatted_tg(mission)
   }
   return desc + '\n';
 }
-
-// Обработчик команды /start
+function send_upcoming_missions_to(chatId, missions, timestamp)
+{
+  const minutes = Math.round(get_minutes_offset(new Date(), new Date(timestamp)));
+  let msg = `Ready up miners! *${double_exp_mutator}* mission`
+  if (missions.length > 1)
+    msg += 's';
+  msg += ` in ${minutes} minutes.\n\n`;
+  msg += missions.map((m) => get_mission_formatted_tg(m)).join('\n');
+  bot.telegram.sendMessage(chatId, msg, { parse_mode: 'Markdown' })
+    .catch((err) => {
+      console.error(`Failed to send in chat '${chatId}':`, err);
+    });
+}
 bot.start(async (ctx) => {
   const chatId = ctx.chat.id;
   const title = 'Deep Rock Galactic Alerts';
@@ -152,8 +154,13 @@ bot.start(async (ctx) => {
     ctx.reply(
       `${title}.\n\nChat registration error. Give it another try later.`);
   }
-});
 
+  const { missions, timestamp } = await query_doublexp_async('next');
+  if (!Array.isArray(missions) || !missions.length)
+    return;
+
+  send_upcoming_missions_to(chatId, missions, timestamp);
+});
 bot.command('current', async (ctx) => {
   try
   {
@@ -173,34 +180,21 @@ bot.command('current', async (ctx) => {
     ctx.reply(add_signature(`Error while fetching ${double_exp_mutator} missions data.`));
   }
 });
-
 bot.launch();
-
-// Корректное завершение работы
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
 
 const job_check_doublexp = cronJob.from({
-  cronTime: `0 0,${timeframe} * * * *`,
-  onTick: async function () {
+  cronTime: `0 0/${timeframe} * * * *`,
+  onTick: async () => {
     try {
-      const { upcoming, ts } = await query_doublexp_async('next');
-      if (!Array.isArray(upcoming) || !upcoming.length)
+      const { missions, timestamp } = await query_doublexp_async('next');
+      if (!Array.isArray(missions) || !missions.length)
         return;
 
       const chatIds = await getAllChatIds();
       chatIds.forEach((chatId) => {
-        const minutes = Math.round(get_minutes_offset(new Date(), new Date(ts)));
-        let msg = `*${double_exp_mutator}* mission`
-        if (upcoming.length > 1)
-          msg += 's';
-        msg += ` in ${minutes} minutes.`;
-        msg += ' Ready up miners!\n\n';
-        msg += upcoming.map((m) => get_mission_formatted_tg(m)).join('\n');
-        bot.telegram.sendMessage(chatId, msg, extra.markdown())
-          .catch((err) => {
-            console.error(`Failed to send in chat '${chatId}':`, err);
-          });
+        send_upcoming_missions_to(chatId, missions, timestamp);
       });
     }
     catch (err) {
@@ -208,5 +202,5 @@ const job_check_doublexp = cronJob.from({
     }
   },
   start: true,
-  timeZone: 'system'
+  timeZone: 'utc'
 });
