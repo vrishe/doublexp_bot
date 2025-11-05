@@ -126,7 +126,7 @@ function add_signature(message)
 }
 function get_mission_formatted_tg(mission)
 {
-  const past_season = !mission.included_in.includes['s0'] ? ' (_past season_)' : '';
+  const past_season = !mission.included_in.includes('s0') ? ' (_past season_)' : '';
   let desc = `*<${mission.Biome}> ${mission.CodeName}*${past_season}\n` +
     `Cave: *${mission.Complexity}*\n` +
     `Length: *${mission.Length}*\n` +
