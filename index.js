@@ -91,6 +91,21 @@ function registerChat(chatId) {
     );
   });
 }
+function unregisterChat(charId) {
+  return new Promise((resolve, reject) => {
+    db.run(
+      'DELETE FROM chats WHERE chat_id == ?',
+      [chatId],
+      function(err) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      }
+    );
+  });
+}
 function getAllChatIds() {
   return new Promise((resolve, reject) => {
     db.all('SELECT chat_id FROM chats', (err, rows) => {
@@ -155,11 +170,29 @@ bot.start(async (ctx) => {
       `${title}.\n\nChat registration error. Give it another try later.`);
   }
 
-  const { missions, timestamp } = await query_doublexp_async('next');
-  if (!Array.isArray(missions) || !missions.length)
-    return;
+  try
+  {
+    const { missions, timestamp } = await query_doublexp_async('next');
+    if (!Array.isArray(missions) || !missions.length)
+      return;
 
-  send_upcoming_missions_to(chatId, missions, timestamp);
+    send_upcoming_missions_to(chatId, missions, timestamp);
+  }
+  catch (err) {
+    console.error(err)
+  }
+});
+bot.command('stop', async (ctx) => {
+  const chatId = ctx.chat.id;
+  try
+  {
+    await unregisterChat(chatId);
+    ctx.reply(`Gotcha! Stopped notifying ${double_exp_mutator} missions.`);
+  }
+  catch (err) {
+    console.error(err);
+    ctx.reply(add_signature(`Failed to stop notifying ${double_exp_mutator} missions.`));
+  }
 });
 bot.command('current', async (ctx) => {
   try
