@@ -185,7 +185,7 @@ process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
 
 const job_check_doublexp = cronJob.from({
-  cronTime: `0 0/${timeframe} * * * *`,
+  cronTime: `32 0/${timeframe} * * * *`,
   onTick: async () => {
     try {
       const { missions, timestamp } = await query_doublexp_async('next');
