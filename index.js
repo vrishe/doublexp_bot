@@ -94,7 +94,7 @@ function registerChat(chatId) {
 function unregisterChat(charId) {
   return new Promise((resolve, reject) => {
     db.run(
-      'DELETE FROM chats WHERE chat_id == ?',
+      'DELETE FROM chats WHERE chat_id = ?',
       [chatId],
       function(err) {
         if (err) {
