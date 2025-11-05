@@ -126,12 +126,13 @@ function add_signature(message)
 }
 function get_mission_formatted_tg(mission)
 {
-  let desc = `*<${mission.Biome}> ${mission.CodeName}*\n` +
-  `Cave: *${mission.Complexity}*\n` +
-  `Length: *${mission.Length}*\n` +
-  `Objectives:\n` +
-  `  - *${mission.PrimaryObjective}*\n` +
-  `  - *${mission.SecondaryObjective}*\n`;
+  const past_season = !mission.included_in.includes['s0'] ? ' (_past season_)' : '';
+  let desc = `*<${mission.Biome}> ${mission.CodeName}*${past_season}\n` +
+    `Cave: *${mission.Complexity}*\n` +
+    `Length: *${mission.Length}*\n` +
+    `Objectives:\n` +
+    `  - *${mission.PrimaryObjective}*\n` +
+    `  - *${mission.SecondaryObjective}*\n`;
   const warnings = mission.MissionWarnings;
   if (Array.isArray(warnings) && warnings.length > 0)
   {
