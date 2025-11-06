@@ -127,7 +127,7 @@ function add_signature(message)
 function get_mission_formatted_tg(mission)
 {
   const past_season = !mission.included_in.includes('s0') ? ' (_past season_)' : '';
-  let desc = `*<${mission.Biome}> ${mission.CodeName}*${past_season}\n` +
+  let desc = `*${mission.Biome}: ${mission.CodeName}${past_season}*\n` +
     `Cave: *${mission.Complexity}*\n` +
     `Length: *${mission.Length}*\n` +
     `Objectives:\n` +
@@ -137,9 +137,9 @@ function get_mission_formatted_tg(mission)
   if (Array.isArray(warnings) && warnings.length > 0)
   {
     desc += `Warnings:\n`
-      + warnings.map((w) => `  - *${w}*`).join('\n');
+      + warnings.map((w) => `  - *${w}*`).join('\n') + '\n';
   }
-  return desc + '\n';
+  return desc;
 }
 function send_upcoming_missions_to(chatId, missions, timestamp)
 {
