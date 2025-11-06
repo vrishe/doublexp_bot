@@ -147,7 +147,7 @@ ${warnings.map((w) => `  - <b>${w}</b>`).join('\n')}
 function send_upcoming_missions_to(chatId, missions, timestamp)
 {
   const minutes = Math.round(get_minutes_offset(new Date(), new Date(timestamp)));
-  let msg = `Ready up miners! *${double_exp_mutator}* mission`
+  let msg = `Ready up miners! <b>${double_exp_mutator}</b> mission`
   if (missions.length > 1)
     msg += 's';
   msg += ` in ${minutes} minutes.\n\n`;
@@ -157,20 +157,19 @@ function send_upcoming_missions_to(chatId, missions, timestamp)
       console.error(`Failed to send in chat '${chatId}':`, err);
     });
 }
+const bot_title = '<b>Deep Rock Galactic Alerts.</b>\n\n';
 bot.start(async (ctx) => {
   const chatId = ctx.chat.id;
-  const title = 'Deep Rock Galactic Alerts';
   try {
     await registerChat(chatId);
-    ctx.reply(
-      `${title}.\n\nWelcome miner!\n` +
-      `You\'ll be notified of ${double_exp_mutator} missions upcoming.`
+    ctx.replyWithHTML(`${bot_title}Welcome miner!
+You'll be notified of <b>${double_exp_mutator}</b> upcoming missions.`
     );
   }
   catch (err) {
     console.error(`Chat ${charId} registration error:`, err);
-    ctx.reply(
-      `${title}.\n\nChat registration error. Give it another try later.`);
+    ctx.replyWithHTML(
+      add_signature(`${bot_title}Chat registration error. Give it another try later.`));
   }
 
   try
@@ -190,11 +189,12 @@ bot.command('stop', async (ctx) => {
   try
   {
     await unregisterChat(chatId);
-    ctx.reply(`Gotcha! Stopped notifying ${double_exp_mutator} missions.`);
+    ctx.replyWithHTML(`${bot_title}Stopped notifying <b>${double_exp_mutator}</b> missions.`);
   }
   catch (err) {
     console.error(err);
-    ctx.reply(add_signature(`Failed to stop notifying ${double_exp_mutator} missions.`));
+    ctx.replyWithHTML(add_signature(`${bot_title}Unable to stop notifying <b>${double_exp_mutator}</b> missions.
+Are you even subscribed?`));
   }
 });
 bot.command('current', async (ctx) => {
@@ -203,7 +203,7 @@ bot.command('current', async (ctx) => {
     const { missions, timestamp } = await query_doublexp_async('current');
     if (!Array.isArray(missions) || !missions.length)
     {
-      ctx.reply(add_signature(`No ${double_exp_mutator} missions at the moment.`));
+      ctx.replyWithHTML(add_signature(`No <b>${double_exp_mutator}</b> missions at the moment.`));
       return;
     }
 
@@ -213,7 +213,7 @@ bot.command('current', async (ctx) => {
   }
   catch (err) {
     console.error(err);
-    ctx.reply(add_signature(`Error while fetching ${double_exp_mutator} missions data.`));
+    ctx.replyWithHTML(add_signature(`Error while fetching <b>${double_exp_mutator}</b> missions data.`));
   }
 });
 bot.launch();
