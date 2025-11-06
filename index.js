@@ -4,7 +4,7 @@ const sqlite3 = require('sqlite3');
 const { CronJob: cronJob } = require('cron');
 const { promisify } = require('util');
 const { Telegraf } = require('telegraf');
-// const { readFile } = require('node:fs/promises');
+const { readFile } = require('node:fs/promises');
 
 function get_minutes_offset(date0, date1)
 {
@@ -38,8 +38,8 @@ const fetch_missions_async = promisify((when, callback) => {
 });
 async function query_doublexp_async(when)
 {
-    const data = await fetch_missions_async(when);
-    //const data = JSON.parse(await readFile(path.resolve('./test.json')));
+    //const data = await fetch_missions_async(when);
+    const data = JSON.parse(await readFile(path.resolve('./test.json')));
     //console.log(data);
 
     let missions = [];
@@ -127,19 +127,19 @@ function add_signature(message)
 }
 function get_mission_formatted_tg(mission)
 {
-  const past_season = !mission.included_in.includes('s0') ? ' (_past season_)' : '';
-  let desc = `*${mission.Biome}: ${mission.CodeName}${past_season}*
-Cave: *${mission.Complexity}*
-Length: *${mission.Length}*
+  const past_season = !mission.included_in.includes('s0') ? ' (<i>past season</i>)' : '';
+  let desc = `<b>${mission.Biome}: ${mission.CodeName}${past_season}</b>
+Cave: <b>${mission.Complexity}</b>
+Length: <b>${mission.Length}</b>
 Objectives:
-  - *${mission.PrimaryObjective}*
-  - *${mission.SecondaryObjective}*
+  - <b>${mission.PrimaryObjective}</b>
+  - <b>${mission.SecondaryObjective}</b>
 `;
   const warnings = mission.MissionWarnings;
   if (Array.isArray(warnings) && warnings.length > 0)
   {
     desc += `Warnings:
-${warnings.map((w) => `  - *${w}*`).join('\n')}
+${warnings.map((w) => `  - <b>${w}</b>`).join('\n')}
 `;
   }
   return desc;
@@ -152,7 +152,7 @@ function send_upcoming_missions_to(chatId, missions, timestamp)
     msg += 's';
   msg += ` in ${minutes} minutes.\n\n`;
   msg += missions.map((m) => get_mission_formatted_tg(m)).join('\n');
-  bot.telegram.sendMessage(chatId, msg, { parse_mode: 'Markdown' })
+  bot.telegram.sendMessage(chatId, msg, { parse_mode: 'HTML' })
     .catch((err) => {
       console.error(`Failed to send in chat '${chatId}':`, err);
     });
@@ -208,7 +208,7 @@ bot.command('current', async (ctx) => {
     }
 
     const minutes = Math.max(0, Math.round(timeframe - get_minutes_offset(new Date(timestamp), new Date())));
-    ctx.replyWithMarkdown(`*${double_exp_mutator}* missions for next *${minutes}* minutes are:\n\n`
+    ctx.replyWithHTML(`<b>${double_exp_mutator}</b> missions for next <b>${minutes}</b> minutes are:\n\n`
       + missions.map((m) => get_mission_formatted_tg(m)).join('\n'));
   }
   catch (err) {
@@ -221,7 +221,7 @@ process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
 
 const job_check_doublexp = cronJob.from({
-  cronTime: `7 */${timeframe} * * * *`,
+  cronTime: `*/10 * * * * *`,
   onTick: async () => {
     try {
       const { missions, timestamp } = await query_doublexp_async('next');
