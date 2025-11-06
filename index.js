@@ -4,7 +4,7 @@ const sqlite3 = require('sqlite3');
 const { CronJob: cronJob } = require('cron');
 const { promisify } = require('util');
 const { Telegraf } = require('telegraf');
-const { readFile } = require('node:fs/promises');
+//const { readFile } = require('node:fs/promises');
 
 function get_minutes_offset(date0, date1)
 {
@@ -38,8 +38,8 @@ const fetch_missions_async = promisify((when, callback) => {
 });
 async function query_doublexp_async(when)
 {
-    //const data = await fetch_missions_async(when);
-    const data = JSON.parse(await readFile(path.resolve('./test.json')));
+    const data = await fetch_missions_async(when);
+    //const data = JSON.parse(await readFile(path.resolve('./test.json')));
     //console.log(data);
 
     let missions = [];
@@ -221,7 +221,7 @@ process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
 
 const job_check_doublexp = cronJob.from({
-  cronTime: `*/10 * * * * *`,
+  cronTime: `7 */${timeframe} * * * *`,
   onTick: async () => {
     try {
       const { missions, timestamp } = await query_doublexp_async('next');
