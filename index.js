@@ -67,7 +67,6 @@ const db = new sqlite3.Database(path.join(process.env.DATA_DIR ?? "./", 'db.sqli
     console.error('DB connection error:', err.message);
   } else {
     console.log('SQLite DB connection established');
-    // Создаём таблицу, если её нет
     db.run(`
       CREATE TABLE IF NOT EXISTS chats (
         chat_id INTEGER PRIMARY KEY,
@@ -86,6 +85,7 @@ function registerChat(chatId) {
           reject(err);
         } else {
           resolve();
+          console.log(`registerChat: ${chatId}`);
         }
       }
     );
@@ -101,6 +101,7 @@ function unregisterChat(chatId) {
           reject(err);
         } else {
           resolve();
+          console.log(`unregisterChat: ${chatId}`);
         }
       }
     );
@@ -127,17 +128,19 @@ function add_signature(message)
 function get_mission_formatted_tg(mission)
 {
   const past_season = !mission.included_in.includes('s0') ? ' (_past season_)' : '';
-  let desc = `*${mission.Biome}: ${mission.CodeName}${past_season}*\n` +
-    `Cave: *${mission.Complexity}*\n` +
-    `Length: *${mission.Length}*\n` +
-    `Objectives:\n` +
-    `  - *${mission.PrimaryObjective}*\n` +
-    `  - *${mission.SecondaryObjective}*\n`;
+  let desc = `*${mission.Biome}: ${mission.CodeName}${past_season}*
+Cave: *${mission.Complexity}*
+Length: *${mission.Length}*
+Objectives:
+  - *${mission.PrimaryObjective}*
+  - *${mission.SecondaryObjective}*
+`;
   const warnings = mission.MissionWarnings;
   if (Array.isArray(warnings) && warnings.length > 0)
   {
-    desc += `Warnings:\n`
-      + warnings.map((w) => `  - *${w}*`).join('\n') + '\n';
+    desc += `Warnings:
+${warnings.map((w) => `  - *${w}*`).join('\n')}
+`;
   }
   return desc;
 }
@@ -159,7 +162,6 @@ bot.start(async (ctx) => {
   const title = 'Deep Rock Galactic Alerts';
   try {
     await registerChat(chatId);
-    console.log(`Chat is registered: ${chatId}`);
     ctx.reply(
       `${title}.\n\nWelcome miner!\n` +
       `You\'ll be notified of ${double_exp_mutator} missions upcoming.`
