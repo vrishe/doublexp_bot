@@ -6,6 +6,7 @@ const { promisify } = require('util');
 const { Telegraf } = require('telegraf');
 //const { readFile } = require('node:fs/promises');
 
+function opEqual(x) { return (v) => v == x; }
 function get_minutes_offset(date0, date1)
 {
   return (date1.getTime() - date0.getTime()) / 60000;
@@ -52,10 +53,28 @@ async function query_doublexp_async(when)
 
         missions.push({
           ...m,
-          Biome: entry[0]
+          Biome: entry[0],
+          Rank: !m.included_in.includes('s0') ? 1 : 0
         });
       }
     }
+    const objectives_priority = [
+      'Elimination',
+      'Escort Duty',
+      'Egg Hunt',
+    ];
+    missions.sort((a, b) => {
+      if (a.Rank != b.Rank)
+        return a.Rank - b.Rank;
+      const a_prio = objectives_priority.findIndex(opEqual(a.PrimaryObjective));
+      const b_prio = objectives_priority.findIndex(opEqual(b.PrimaryObjective));
+      if (a_prio != b_prio)
+        return b_prio - a_prio; // not an error
+      if (a.Length != b.Length)
+        return a.Length - b.Length;
+      if (a.Complexity != b.Complexity)
+        return a.Complexity - b.Complexity;
+    });
     return { 
       missions,
       timestamp: data.timestamp
